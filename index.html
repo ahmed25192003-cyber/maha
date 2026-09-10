@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى أميرتي 💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Reem+Kufi:wght@500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d0614, #2a0826, #1a0b2e);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Floating Hearts Animation Background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart-particle {
+            position: absolute;
+            bottom: -50px;
+            color: rgba(255, 105, 180, 0.4);
+            font-size: 20px;
+            animation: floatUp 8s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Password Lock Screen */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 6, 20, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.8s ease-in-out;
+        }
+
+        .lock-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 105, 180, 0.2); }
+            100% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 35px rgba(255, 105, 180, 0.5); }
+        }
+
+        .lock-box h2 {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.8rem;
+            color: #ff8da1;
+            margin-bottom: 15px;
+        }
+
+        .lock-box p {
+            color: #d1c4e9;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 141, 161, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 4px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .password-input:focus {
+            border-color: #ff69b4;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .unlock-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+
+        .unlock-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 65, 108, 0.6);
+        }
+
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Main Content Container */
+        #main-content {
+            display: none;
+            width: 100%;
+            max-width: 1100px;
+            padding: 40px 20px;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3, #ffb199);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            animation: fadeIn 2s ease-in;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #e0d0f0;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Audio Player Bar */
+        .music-player-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin: 30px auto 50px auto;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .music-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .music-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            animation: spin 6s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .music-details h4 {
+            color: #fff;
+            font-size: 1.05rem;
+        }
+
+        .music-details p {
+            color: #b3a2c7;
+            font-size: 0.85rem;
+        }
+
+        audio {
+            height: 40px;
+            outline: none;
+            border-radius: 30px;
+        }
+
+        /* Photos Grid Layout */
+        .gallery-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #ff8da1;
+            margin-bottom: 30px;
+            font-family: 'Reem Kufi', sans-serif;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 105, 180, 0.5);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+        }
+
+        .img-wrapper {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+            background: #1a0f26;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .card-caption {
+            padding: 18px 20px;
+            text-align: center;
+            background: rgba(15, 7, 25, 0.7);
+        }
+
+        .card-caption p {
+            color: #f1e4ff;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        /* Love Letter / Romantic Section */
+        .love-letter-section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 141, 161, 0.4);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .love-letter-section h3 {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 2rem;
+            color: #ff758c;
+            margin-bottom: 20px;
+        }
+
+        .love-letter-section p {
+            font-size: 1.15rem;
+            line-height: 2;
+            color: #e9dbff;
+            max-width: 850px;
+            margin: 0 auto 15px auto;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #8a799e;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .img-wrapper { height: 260px; }
+            .music-player-card { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Hearts -->
+    <div class="hearts-bg" id="hearts-container"></div>
+
+    <!-- Password Lock Screen -->
+    <div id="lock-screen">
+        <div class="lock-box">
+            <h2>مفاجأة خاصة جداً 💖</h2>
+            <p>أدخلي الباسورد الخاص بينا عشان تفتحي المفاجأة</p>
+            <div class="input-group">
+                <input type="password" id="passInput" class="password-input" placeholder="••••••••" maxlength="8">
+            </div>
+            <button class="unlock-btn" onclick="checkPassword()">افتحي المفاجأة ✨</button>
+            <p class="error-msg" id="errorMsg">الباسورد مش صح، فكري تاني يا حلوة 😉</p>
+        </div>
+    </div>
+
+    <!-- Main Website Content -->
+    <div id="main-content">
+        <header>
+            <h1>إلى أجمل حاجة في حياتي ❤️</h1>
+            <p>كل لحظة جنبك هي أجمل أيام عمري، والمكان ده معمول مخصوص عشان تفضل ضحكتك وصورك قدام عيني دايماً ✨</p>
+        </header>
+
+        <!-- Audio Player Section -->
+        <div class="music-player-card">
+            <div class="music-info">
+                <div class="music-icon">🎵</div>
+                <div class="music-details">
+                    <h4>الاغنية السرسجيه بتاعتنا  🎶</h4>
+                    <p>استمعي للموسيقى وأنتي بتتفرجي</p>
+                </div>
+            </div>
+            <!-- replace 'song.mp3' with your audio file path or link -->
+            <audio id="bgMusic" controls loop>
+                <source src="song.mp3" type="audio/mpeg">
+                متصفحك لا يدعم تشغيل الصوت.
+            </audio>
+        </div>
+
+        <h3 class="gallery-title">📸 أجمل حاجه في حياتي </h3>
+
+        <!-- 6 Formatted Photo Cards -->
+        <div class="photos-grid">
+            <!-- Photo 1 -->
+            <div class="photo-card">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" alt="صورة 1">
+                </div>
+                <div class="card-caption">
+                    <p>أول صورة شوفتها ليكي   💖</p>
+                </div>
+            </div>
+
+            <!-- Photo 2 -->
+            <div class="photo-card">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" alt="صورة 2">
+                </div>
+                <div class="card-caption">
+                    <p>ضحكتك اللي بتنورلي الدنيا ✨</p>
+                </div>
+            </div>
+
+            <!-- Photo 3 -->
+            <div class="photo-card">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="صورة 3">
+                </div>
+                <div class="card-caption">
+                    <p>أحلى أوقات في حياتي بقضيها جنبك 🌹</p>
+                </div>
+            </div>
+
+            <!-- Photo 4 -->
+            <div class="photo-card">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80" alt="صورة 4">
+                </div>
+                <div class="card-caption">
+                    <p>كل يوم بحبك أكتر من اللي قبله 💕</p>
+                </div>
+            </div>
+
+            <!-- Photo 5 -->
+            <div class="photo-card">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=600&q=80" alt="صورة 5">
+                </div>
+                <div class="card-caption">
+                    <p>نظرة عينيكي بتسوى كل الدنيا 👑</p>
+                </div>
+            </div>
+
+            <!-- Photo 6 -->
+            <div class="photo-card">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="صورة 6">
+                </div>
+                <div class="card-caption">
+                    <p>ربنا يديمك في حياتي يا أغلى ما عندي ❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Love Letter Section -->
+        <div class="love-letter-section">
+            <h3>رسالة من القلب 💌</h3>
+            <p>
+                حبيبتي ونور عيني.. وجودك في حياتي بيخلي كل حاجة ألمسها ليها معنى وطعم ثاني.
+                ربنا يجعل كل أيامنا حب وفرح وسعادة مع بعض، وتفضلي دايماً سندي وسر سعادتي.
+            </p>
+            <p style="font-weight: 700; color: #ff8da1; margin-top: 15px;">بحبك دايماً وإلى الأبد ❤️</p>
+        </div>
+
+        <footer>
+            <p>تم التصميم بكل حب وإخلاص من أجلك أانتي فقط 💖</p>
+        </footer>
+    </div>
+
+    <script>
+        // Floating hearts generator
+        const heartsContainer = id => document.getElementById(id);
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 4 + 4 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            heartsContainer('hearts-container').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+        setInterval(createHeart, 350);
+
+        // Password Check Logic
+        function checkPassword() {
+            const input = document.getElementById('passInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const lockScreen = document.getElementById('lock-screen');
+            const mainContent = document.getElementById('main-content');
+            const bgMusic = document.getElementById('bgMusic');
+
+            if (input === '10122004') {
+                errorMsg.style.display = 'none';
+                lockScreen.style.opacity = '0';
+                
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    
+                    // Smooth reveal animation
+                    setTimeout(() => {
+                        mainContent.style.opacity = '1';
+                        mainContent.style.transform = 'translateY(0)';
+                    }, 50);
+
+                    // Try to autoplay music after unlock
+                    bgMusic.play().catch(e => console.log("Autoplay blocked:", e));
+                }, 800);
+            } else {
+                errorMsg.style.display = 'block';
+                // Shake effect on error
+                const lockBox = document.querySelector('.lock-box');
+                lockBox.style.transform = 'translateX(10px)';
+                setTimeout(() => lockBox.style.transform = 'translateX(-10px)', 100);
+                setTimeout(() => lockBox.style.transform = 'translateX(10px)', 200);
+                setTimeout(() => lockBox.style.transform = 'translateX(0)', 300);
+            }
+        }
+
+        // Allow pressing Enter key to unlock
+        document.getElementById('passInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
